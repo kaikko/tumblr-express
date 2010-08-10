@@ -47,6 +47,9 @@
 	
 	<class name="com.thesaguaros.tumblrexpress.pojo.Post">
 		<map-to xml="post" />
+		<field name="id" type="java.lang.String">
+			<bind-xml node="attribute" />
+		</field>		
 		<field name="tumblelog" type="com.thesaguaros.tumblrexpress.pojo.Tumblelog">
 			<bind-xml auto-naming="deriveByClass" node="element" />
 		</field>

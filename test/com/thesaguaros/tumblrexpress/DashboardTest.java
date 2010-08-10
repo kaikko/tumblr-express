@@ -1,6 +1,6 @@
 package com.thesaguaros.tumblrexpress;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -14,16 +14,16 @@ import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
 import org.junit.Test;
 import org.scribe.http.Request;
-import org.scribe.http.Response;
 import org.scribe.http.Request.Verb;
+import org.scribe.http.Response;
 import org.scribe.oauth.Scribe;
 import org.scribe.oauth.Token;
 import org.xml.sax.InputSource;
 
-import com.thesaguaros.tumblrexpress.pojo.Authenticate;
+import com.thesaguaros.tumblrexpress.pojo.Dashboard;
 
 
-public class AuthenticateTest {
+public class DashboardTest {
 
 	@Test
 	public void basicTest() throws MappingException, MarshalException, ValidationException {
@@ -42,13 +42,12 @@ public class AuthenticateTest {
 	    String accessTokenStr = "qdsVmfWENWgwSLtalY5X5KbRXAz6ofkKHBQVrmeIZvkSuId4K8";
 	    String accessTokenSecretStr = "aUXcxFLmuDkMrxlpl8KGlLEzGFYPzyGPqfxu7n1TS5EwPEDTj7";
 		Token accessToken = new Token(accessTokenStr, accessTokenSecretStr);
-
-		//works with http and https
-		Request request = new Request(Verb.GET, "https://www.tumblr.com/api/authenticate");
+		
+		Request request = new Request(Verb.GET, "https://www.tumblr.com/api/dashboard");
 		scribe.signRequest(request, accessToken);
 		Response response = request.send();
 		
-		InputSource input = new InputSource(ClassLoader.getSystemResourceAsStream("com/thesaguaros/tumblrexpress/xml/mapping/tumblr-mapping-authenticate.xml"));
+		InputSource input = new InputSource(ClassLoader.getSystemResourceAsStream("com/thesaguaros/tumblrexpress/xml/mapping/tumblr-mapping-dashboard.xml"));
 		Mapping mapping = new Mapping();
 		mapping.loadMapping(input);
 		// initialize and configure XMLContext
@@ -57,16 +56,14 @@ public class AuthenticateTest {
 
 		// Create a Reader to the file to unmarshal from
 		Reader reader = new StringReader(response.getBody());
-
+		
 		// Create a new Unmarshaller
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		unmarshaller.setClass(Authenticate.class);
+		unmarshaller.setClass(Dashboard.class);
 
 		// Unmarshal the person object
-		Authenticate authenticate = (Authenticate) unmarshaller.unmarshal(reader);
-		
-		assertEquals("kaikko", authenticate.getTumblelog().getName());
-		assertEquals("http://kaikko.tumblr.com/", authenticate.getTumblelog().getUrl());
+		Dashboard dashboard = (Dashboard) unmarshaller.unmarshal(reader);
+		assertEquals("931346077", dashboard.getPosts().getPosts().get(0).getId());
 		
 	}
 	
