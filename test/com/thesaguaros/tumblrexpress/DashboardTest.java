@@ -43,7 +43,8 @@ public class DashboardTest {
 	    String accessTokenSecretStr = "aUXcxFLmuDkMrxlpl8KGlLEzGFYPzyGPqfxu7n1TS5EwPEDTj7";
 		Token accessToken = new Token(accessTokenStr, accessTokenSecretStr);
 		
-		Request request = new Request(Verb.GET, "https://www.tumblr.com/api/dashboard");
+		Request request = new Request(Verb.POST, "https://www.tumblr.com/api/dashboard");
+		request.addBodyParameter("num", "5");
 		scribe.signRequest(request, accessToken);
 		Response response = request.send();
 		
@@ -63,7 +64,8 @@ public class DashboardTest {
 
 		// Unmarshal the person object
 		Dashboard dashboard = (Dashboard) unmarshaller.unmarshal(reader);
-		assertEquals("931346077", dashboard.getPosts().getPosts().get(0).getId());
+		//assertEquals("931346077", dashboard.getPosts().getPosts().get(0).getId());
+		assertEquals(5, dashboard.getPosts().getPosts().size());
 		
 	}
 	
