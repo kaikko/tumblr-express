@@ -8,8 +8,18 @@ import org.exolab.castor.xml.ValidationException;
 import org.scribe.oauth.Token;
 
 import com.thesaguaros.tumblrexpress.pojo.castor.Authenticate;
+import com.thesaguaros.tumblrexpress.pojo.castor.Dashboard;
 
 public class Services {
+	
+	public static final String TEXT = "text";
+	public static final String QUOTE = "quote";
+	public static final String PHOTO = "photo";
+	public static final String LINK = "link";
+	public static final String CHAT = "chat";
+	public static final String VIDEO = "video";
+	public static final String AUDIO = "audio";
+	
 	
 	private Properties scribeProps;
 	private Token accessToken;
@@ -47,6 +57,27 @@ public class Services {
 		}
 		return null;
 	}
+
+	public Dashboard getDashboardPosts() {
+		try {
+			return DashboardService.getPosts(scribeProps, accessToken);
+		} catch (MarshalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	//TODO to finish
+	/*
+	public List<Post> getPublicPosts() {
+		AuthenticatedReadService.getPosts(scribeProps, accessToken);
+	}*/
 	
 }
