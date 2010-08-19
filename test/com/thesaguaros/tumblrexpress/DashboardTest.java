@@ -20,7 +20,7 @@ import org.scribe.oauth.Scribe;
 import org.scribe.oauth.Token;
 import org.xml.sax.InputSource;
 
-import com.thesaguaros.tumblrexpress.pojo.Dashboard;
+import com.thesaguaros.tumblrexpress.pojo.castor.Dashboard;
 
 
 public class DashboardTest {
@@ -48,7 +48,7 @@ public class DashboardTest {
 		scribe.signRequest(request, accessToken);
 		Response response = request.send();
 		
-		InputSource input = new InputSource(ClassLoader.getSystemResourceAsStream("com/thesaguaros/tumblrexpress/xml/mapping/tumblr-mapping-dashboard.xml"));
+		InputSource input = new InputSource(ClassLoader.getSystemResourceAsStream("com/thesaguaros/tumblrexpress/xml/castor/mapping/tumblr-mapping-dashboard.xml"));
 		Mapping mapping = new Mapping();
 		mapping.loadMapping(input);
 		// initialize and configure XMLContext

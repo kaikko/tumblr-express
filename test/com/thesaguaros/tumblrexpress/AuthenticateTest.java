@@ -20,7 +20,7 @@ import org.scribe.oauth.Scribe;
 import org.scribe.oauth.Token;
 import org.xml.sax.InputSource;
 
-import com.thesaguaros.tumblrexpress.pojo.Authenticate;
+import com.thesaguaros.tumblrexpress.pojo.castor.Authenticate;
 
 
 public class AuthenticateTest {
@@ -48,7 +48,7 @@ public class AuthenticateTest {
 		scribe.signRequest(request, accessToken);
 		Response response = request.send();
 		
-		InputSource input = new InputSource(ClassLoader.getSystemResourceAsStream("com/thesaguaros/tumblrexpress/xml/mapping/tumblr-mapping-authenticate.xml"));
+		InputSource input = new InputSource(ClassLoader.getSystemResourceAsStream("com/thesaguaros/tumblrexpress/xml/castor/mapping/tumblr-mapping-authenticate.xml"));
 		Mapping mapping = new Mapping();
 		mapping.loadMapping(input);
 		// initialize and configure XMLContext
@@ -65,8 +65,8 @@ public class AuthenticateTest {
 		// Unmarshal the person object
 		Authenticate authenticate = (Authenticate) unmarshaller.unmarshal(reader);
 		
-		assertEquals("kaikko", authenticate.getTumblelog().getName());
-		assertEquals("http://kaikko.tumblr.com/", authenticate.getTumblelog().getUrl());
+		assertEquals("kaikko", authenticate.getTumblelogs().get(0).getName());
+		assertEquals("http://kaikko.tumblr.com/", authenticate.getTumblelogs().get(0).getUrl());
 		
 	}
 	
