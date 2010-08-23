@@ -21,6 +21,11 @@
       				</fileset>
     		</classpath>
         </javac>
+        <copy todir="${build}">
+                <fileset dir="${src}">
+                        <include name="**/*.xml" />
+                </fileset>
+        </copy>    	
     </target>
     
     <target name="run" description="Run tumblr-express" depends="main">
