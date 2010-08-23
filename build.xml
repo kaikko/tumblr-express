@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="main">
+	<description>tumblr-express</description>
+	
+	<property name="build" location="build" />
+	<property name="src" location="src" />
+	<property name="test" location="test" />
+	<property name="lib" location="lib" />
+	<property name="dist" location="dist" />
+	
+    <target name="main" depends="compile, compress">
+    </target>
+  
+    <target name="compile" description="Compilation target">
+    	<mkdir dir="${build}" />
+        <javac srcdir="${src}" destdir="${build}">
+        	<classpath>
+      			<pathelement path="${classpath}"/>
+      				<fileset dir="${lib}">
+        				<include name="*.jar"/>
+      				</fileset>
+    		</classpath>
+        </javac>
+    </target>
+    
+    <target name="run" description="Run tumblr-express" depends="main">
+    	<java fork="true" classname="com.thesaguaros.tumblrexpress.gui.MainWindow">
+        	<classpath>
+      			<pathelement path="${classpath}"/>
+      				<fileset dir="${lib}">
+        				<include name="*.jar"/>
+      				</fileset>
+      				<fileset dir="${dist}">
+      					<include name="*.jar"/>
+      				</fileset>
+    		</classpath>
+    	</java>
+   </target>
+  
+  <target name="compress" description="Archiving target">
+  	<mkdir dir="${dist}" />
+	<jar jarfile="${dist}/tumblr-express.jar" basedir="${build}" />
+  </target>
+
+  <target name="test" description="Build test classes (requires JUnit in classpath)">
+        <javac srcdir="${test}" destdir="${build}">
+        	<classpath>
+      			<pathelement path="${classpath}"/>
+      				<fileset dir="${lib}">
+        				<include name="*.jar"/>
+      				</fileset>
+    		</classpath>
+        </javac>
+  </target>
+  
+  <target name="clean">
+	<delete includeEmptyDirs="true">
+    	<fileset dir="${build}" includes="**/*" />
+    	<fileset dir="${dist}" includes="**/*"/>
+	</delete>
+  </target>
+</project>
